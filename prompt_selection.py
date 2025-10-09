@@ -14,7 +14,11 @@ def randomPromptReview():
     Randomly selects a prompt and allows user to review it.
     """
     # open the prompt database CSV
-    data = pd.read_csv(FILEPATH, usecols=["id", "en", "tags", "pulled","approved","comments","intials"], index_col="id")
+    data = pd.read_csv(FILEPATH, index_col="id")
+
+    # Explicitly cast string columns to object type
+    for col in ["comments", "intials"]:
+        data[col] = data[col].astype("string")
 
     # filter to only the unpulled data
     unpulled = data["pulled"].str.lower() == "no"
@@ -33,6 +37,37 @@ def randomPromptReview():
         print(f"ID:\t {randomID}")
         print(f"TAGS:\t {selectedPrompt['tags']}")
         print(f"PROMPT:\t {selectedPrompt['en']}")
+
+        # Update pulled status
+        data.loc[randomID, "pulled"] = "yes"
+
+        # User Approval
+        approval = input("\nDo you approve this prompt? (y/n): ").strip().lower()
+        while True:
+            if approval == 'y':
+                print("Prompt approved!")
+                data.loc[randomID, "approved"] = "yes"
+                break
+            
+            elif approval == 'n':
+                print("Prompt rejected.")
+                # default value is "no", so no need to change
+                break
+            
+            else:
+                print("Invalid input. Please enter 'y' or 'n'.")
+        
+        # User comments
+        comments = input("\nEnter your comment: ").strip()
+        data.loc[randomID, "comments"] = comments
+
+        initials = input("\nEnter your initials: ").strip().upper()
+        data.loc[randomID, "intials"] = initials
+
+        # Save the updated DataFrame back to the CSV
+        data.to_csv(FILEPATH)
+        print(f"\n Prompt {randomID} updated and saved successfully.")
+    
 
 def main ():
     """
