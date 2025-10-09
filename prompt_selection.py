@@ -23,11 +23,18 @@ def randomPromptReview():
 
     # check if the approval goal has been met
     print("\n --- Approval Status ---")
+    # gets a sum of the approved prompts
     approved_count = (data["approved"].str.lower() == "yes").sum()
+    # calculates the precentage to goal
     progress_to_goal = min((approved_count / PROMPT_APPROVAL_GOAL) * 100, 100)
+    # calculates how many more prompts are needed to reach the goal
     goal_remaining = max(PROMPT_APPROVAL_GOAL - approved_count, 0)
+    # calculate how many prompts have been pulled
+    numpulled = (data["pulled"].str.lower() == "yes").sum()
+    # print the status
     print(f"Progress to goal: {progress_to_goal:.2f}% ({approved_count}/{PROMPT_APPROVAL_GOAL})")
     print(f"Prompts remaining to reach goal: {goal_remaining}\n")
+    print(f"Total Prompts Pulled: {numpulled}")
 
 
     # filter to only the unpulled data
