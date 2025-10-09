@@ -67,7 +67,6 @@ def randomPromptReview():
         # Save the updated DataFrame back to the CSV
         data.to_csv(FILEPATH)
         print(f"\n Prompt {randomID} updated and saved successfully.")
-    
 
 def main ():
     """
