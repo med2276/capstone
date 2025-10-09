@@ -33,8 +33,8 @@ def randomPromptReview():
     numpulled = (data["pulled"].str.lower() == "yes").sum()
     # print the status
     print(f"Progress to goal: {progress_to_goal:.2f}% ({approved_count}/{PROMPT_APPROVAL_GOAL})")
-    print(f"Prompts remaining to reach goal: {goal_remaining}\n")
-    print(f"Total Prompts Pulled: {numpulled}")
+    print(f"Prompts remaining to reach goal: {goal_remaining}")
+    print(f"Total Prompts Pulled: {numpulled}\n")
 
 
     # filter to only the unpulled data
