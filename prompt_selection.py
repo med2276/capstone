@@ -42,7 +42,7 @@ def randomPromptReview():
         data.loc[randomID, "pulled"] = "yes"
 
         # User Approval
-        approval = input("\nDo you approve this prompt? (y/n): ").strip().lower()
+        approval = input("\nDo you approve this prompt? (y/N): ").strip().lower()
         while True:
             if approval == 'y':
                 print("Prompt approved!")
