@@ -14,10 +14,6 @@ def openCsv():
     """
     df = pd.read_csv(FILEPATH, usecols=["id", "en"], index_col="id")
 
-
-
-
-
 def main ():
     """
     Main function to run the prompt selector.
