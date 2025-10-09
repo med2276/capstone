@@ -4,6 +4,7 @@ to specify it meets certain criteria.
 """
 # Global Constants
 FILEPATH = "prompt_database.csv"
+PROMPT_APPROVAL_GOAL = 45
 
 # Imports
 import random
@@ -19,6 +20,15 @@ def randomPromptReview():
     # Explicitly cast string columns to object type
     for col in ["comments", "intials"]:
         data[col] = data[col].astype("string")
+
+    # check if the approval goal has been met
+    print("\n --- Approval Status ---")
+    approved_count = (data["approved"].str.lower() == "yes").sum()
+    progress_to_goal = min((approved_count / PROMPT_APPROVAL_GOAL) * 100, 100)
+    goal_remaining = max(PROMPT_APPROVAL_GOAL - approved_count, 0)
+    print(f"Progress to goal: {progress_to_goal:.2f}% ({approved_count}/{PROMPT_APPROVAL_GOAL})")
+    print(f"Prompts remaining to reach goal: {goal_remaining}\n")
+
 
     # filter to only the unpulled data
     unpulled = data["pulled"].str.lower() == "no"
